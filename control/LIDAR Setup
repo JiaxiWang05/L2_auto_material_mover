@@ -1,0 +1,5 @@
+import adafruit_lidar
+
+lidar = adafruit_lidar.Lidar(I2C)
+distances = lidar.read()  # Collects a full 360° distance reading
+print("LIDAR distances:", distances)
