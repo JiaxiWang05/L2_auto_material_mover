@@ -9,22 +9,24 @@ function test() {
 Step 1: ```Install Git```
 Git is a tool that allows you to download code from GitHub and collaborate on projects. Follow the installation instructions based on your operating system:
 
-```Windows
+```
+Windows
+```
 Download Git:
 
 Visit git-scm.com.
 Click "Download for Windows" to get the Git installer.
-Run the Installer:```
+Run the Installer:
 
 Locate the downloaded file and double-click it to start the installation.
 Follow the prompts, and keep the default settings.
-```At the end, Git Bash (a terminal window to use Git) will be installed.```
+At the end, Git Bash (a terminal window to use Git) will be installed. 
 Verify Installation:
 
 Open Git Bash (you can search for it in the Start menu).
 Type git --version and press Enter. You should see a Git version number if it’s installed correctly.
-```macOS
-Install Git via Homebrew (recommended):```
+```macOS```
+Install Git via Homebrew (recommended):
 
 Open Terminal (you can find it in Applications > Utilities).
 Type the following command to install Git:
@@ -34,8 +36,8 @@ function test() {
 Copy code
 brew install git
 Homebrew will install Git automatically.");
-}
-```
+}```
+
 
 Verify Installation:
 
