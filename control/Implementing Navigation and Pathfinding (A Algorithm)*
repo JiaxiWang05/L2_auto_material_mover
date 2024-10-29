@@ -1,0 +1,27 @@
+def a_star_algorithm(start, end, grid):
+    open_list = set([start])
+    closed_list = set()
+    g = {start: 0}
+    f = {start: heuristic(start, end)}
+
+    while open_list:
+        current = min(open_list, key=lambda x: f[x])
+        if current == end:
+            return reconstruct_path(g, current)
+
+        open_list.remove(current)
+        closed_list.add(current)
+
+        for neighbor in neighbors(current):
+            if neighbor in closed_list:
+                continue
+            tentative_g = g[current] + distance(current, neighbor)
+
+            if neighbor not in open_list:
+                open_list.add(neighbor)
+            elif tentative_g >= g[neighbor]:
+                continue
+
+            g[neighbor] = tentative_g
+            f[neighbor] = g[neighbor] + heuristic(neighbor, end)
+    return None
