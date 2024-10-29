@@ -1,0 +1,5 @@
+grid = [[0, 1, 0], [0, 0, 0], [0, 1, 0]]  # 1 = obstacle, 0 = open
+start = (0, 0)
+end = (2, 2)
+path = a_star_algorithm(start, end, grid)
+print("Path:", path)
