@@ -6,7 +6,7 @@ function test() {
 }
 ```
 
-Step 1: Install Git
+Step 1: ```Install Git```
 Git is a tool that allows you to download code from GitHub and collaborate on projects. Follow the installation instructions based on your operating system:
 
 Windows
