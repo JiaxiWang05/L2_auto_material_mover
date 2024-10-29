@@ -1,0 +1,121 @@
+# Import necessary libraries for GPIO control, time management, and Adafruit sensor libraries
+import RPi.GPIO as GPIO
+import time
+from adafruit_motorkit import MotorKit
+import adafruit_lidar
+import cv2
+
+# Define GPIO pins for motors, LIDAR, and emergency stop button
+# This configuration allows you to easily update pin assignments in one place.
+MOTOR_LEFT_PIN = 17      # Left motor GPIO pin
+MOTOR_RIGHT_PIN = 27     # Right motor GPIO pin
+LIDAR_PIN = 22           # LIDAR sensor GPIO pin
+EMERGENCY_STOP_PIN = 18  # Emergency stop button GPIO pin
+
+# Set up the GPIO mode and initialize the emergency stop button
+# BCM mode refers to the Broadcom pin numbering system used by Raspberry Pi.
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(EMERGENCY_STOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Pull-up resistor for emergency stop
+
+# Initialize motor control using the Adafruit MotorKit library
+# MotorKit allows control of DC motors connected to the motor driver.
+kit = MotorKit()
+
+# Define functions for motor control
+# These functions allow the forklift to move forward, backward, or stop.
+def move_forward(speed):
+    """Move forward at the specified speed (0 to 1 for full speed)."""
+    kit.motor1.throttle = speed  # Left motor forward
+    kit.motor2.throttle = speed  # Right motor forward
+
+def move_backward(speed):
+    """Move backward at the specified speed."""
+    kit.motor1.throttle = -speed  # Left motor backward
+    kit.motor2.throttle = -speed  # Right motor backward
+
+def stop_all_motors():
+    """Stop all motors immediately."""
+    kit.motor1.throttle = 0
+    kit.motor2.throttle = 0
+
+# Define the function for the emergency stop button
+# This continuously checks the state of the button, stopping motors if pressed.
+def check_emergency_stop():
+    """Check for emergency stop button press and stop motors if activated."""
+    while True:
+        if GPIO.input(EMERGENCY_STOP_PIN) == GPIO.LOW:  # Button pressed (LOW signal)
+            print("Emergency stop activated!")
+            stop_all_motors()
+            break
+        time.sleep(0.1)  # Check every 0.1 seconds to avoid excessive CPU usage
+
+# Initialize LIDAR sensor for obstacle detection
+# LIDAR provides distance measurements that allow the forklift to detect obstacles.
+lidar = adafruit_lidar.Lidar(I2C)  # Initialize LIDAR on I2C interface
+
+def read_lidar():
+    """Read distances from the LIDAR sensor for obstacle detection."""
+    distances = lidar.read()  # Collect full 360° distance data
+    print("LIDAR distances:", distances)  # Display distance data for debugging
+    return distances
+
+# Initialize the camera using OpenCV for real-time video capture
+# The camera provides visual data to recognize objects or markers in the forklift's path.
+cap = cv2.VideoCapture(0)  # Open the default camera (usually the first connected camera)
+
+def capture_frame():
+    """Capture and display a frame from the camera."""
+    ret, frame = cap.read()  # Capture a frame
+    if ret:
+        cv2.imshow("Camera Feed", frame)  # Display the camera feed in a window
+        cv2.waitKey(1)  # Wait for a short time to allow the window to update
+    else:
+        print("Camera error: Could not capture frame")
+
+# Define an example pathfinding algorithm using A* (for navigation)
+# A* finds the shortest path by calculating cost values for each grid point.
+def a_star_algorithm(start, end, grid):
+    """Find the shortest path using A* pathfinding."""
+    open_list = set([start])  # Nodes to be evaluated
+    closed_list = set()       # Nodes already evaluated
+    g = {start: 0}            # Cost from start to node
+    f = {start: heuristic(start, end)}  # Estimated cost from start to goal
+
+    while open_list:
+        # Get the node with the lowest f score
+        current = min(open_list, key=lambda x: f[x])
+        if current == end:
+            return reconstruct_path(g, current)  # Reconstruct path once goal is reached
+
+        open_list.remove(current)
+        closed_list.add(current)
+
+        # Evaluate each neighbor of the current node
+        for neighbor in neighbors(current):
+            if neighbor in closed_list:
+                continue
+            tentative_g = g[current] + distance(current, neighbor)
+
+            if neighbor not in open_list:
+                open_list.add(neighbor)
+            elif tentative_g >= g[neighbor]:
+                continue
+
+            g[neighbor] = tentative_g
+            f[neighbor] = g[neighbor] + heuristic(neighbor, end)
+    return None  # Return None if no path is found
+
+# Clean up resources after the program finishes
+# This closes the camera and cleans up GPIO settings to avoid conflicts.
+def cleanup():
+    """Release resources and perform cleanup tasks."""
+    cap.release()  # Close the camera feed
+    cv2.destroyAllWindows()  # Close OpenCV windows
+    GPIO.cleanup()  # Reset GPIO settings to default
+
+# Example usage of motor functions and emergency check
+move_forward(0.5)  # Move forward at 50% speed
+time.sleep(2)      # Continue moving for 2 seconds
+check_emergency_stop()  # Check for emergency stop during movement
+stop_all_motors()  # Stop motors after testing
+cleanup()  # Cleanup resources
