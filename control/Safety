@@ -1,0 +1,13 @@
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(EMERGENCY_STOP_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def check_emergency_stop():
+    while True:
+        if GPIO.input(EMERGENCY_STOP_PIN) == GPIO.LOW:
+            print("Emergency stop activated!")
+            stop_all_motors()
+            break
+        time.sleep(0.1)
