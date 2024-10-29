@@ -1,5 +1,10 @@
 This design project outlines the development of an automated material mover; designed to move up to two tonnes of load around a factory environment. Elements of the factory design are to be considered. This may result in a range of parameters that combined with the material mover itself produces a commercially viable goods handling ecosystem. As the world approaches the fourth industrial revolution it is becoming increasingly important for companies to automate their manufacturing and supply facilities. A key area for focus in a fully automated production facility is the link between supplier delivery, component storage, and manufacturing or assembly areas. This is often overlooked - conventional manned forklifts, either Internal Combustion or battery-electric, are still widely used in industrial facilities, and herein lies the design opportunity. The device designed will aim to disrupt this market; while it shares its silhouette with such nonautomated products, and as such shares the versatility afforded by palletised goods, it also introduces a level of freedom by reducing the requirement for personnel. An outline of the factory layout and the communications between device and factory plans are a prime requirement 
 
+```
+function test() {
+  console.log("This code will have a copy button to the right of it");
+}
+```
 
 Step 1: Install Git
 Git is a tool that allows you to download code from GitHub and collaborate on projects. Follow the installation instructions based on your operating system:
