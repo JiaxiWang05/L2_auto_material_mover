@@ -10,6 +10,11 @@ This design project focuses on developing an **automated material mover** capabl
 
 Git allows you to download code from GitHub and collaborate on projects. Follow the instructions below based on your operating system.
 
+"""Install the Operating System:"""
+
+Action: Download and flash Raspberry Pi OS or Ubuntu (if using Jetson) onto a microSD card and boot the device.
+Why: A lightweight Linux-based OS provides a stable environment with access to programming libraries, GPIO controls, and compatibility with ROS (Robot Operating System) for complex robotic tasks.
+
 ### Windows
 
 1. **Download Git**:  
