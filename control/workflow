@@ -29,4 +29,4 @@ IF all_sensors_tested_and_passed:
    OUTPUT "Microcontroller configured with sensors"
    PROCEED to next development stage
 ELSE:
-   LOG "Microcontroller compatibility test failed, reevaluate processing requirements"
+   LOG "Microcontroller compatibility test failed, reevaluate processing requirements" 
