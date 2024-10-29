@@ -1,0 +1,11 @@
+from adafruit_motorkit import MotorKit
+
+kit = MotorKit()
+
+def move_forward(speed):
+    kit.motor1.throttle = speed
+    kit.motor2.throttle = speed
+
+def move_backward(speed):
+    kit.motor1.throttle = -speed
+    kit.motor2.throttle = -speed
