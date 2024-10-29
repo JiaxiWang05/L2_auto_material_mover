@@ -1,0 +1,5 @@
+import adafruit_lidar
+
+lidar = adafruit_lidar.Lidar(I2C)  # Initialize LIDAR sensor
+distances = lidar.read()           # Collect distance data
+print("LIDAR distances:", distances)
