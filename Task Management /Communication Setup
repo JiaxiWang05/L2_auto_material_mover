@@ -1,0 +1,17 @@
+pip3 install paho-mqtt
+
+import paho.mqtt.client as mqtt
+
+def on_message(client, userdata, message):
+    task = message.payload.decode("utf-8")
+    if task == "move_to_pickup":
+        # Call function to navigate to pickup point
+        move_to_point("pickup")
+    elif task == "move_to_dropoff":
+        move_to_point("dropoff")
+
+client = mqtt.Client()
+client.on_message = on_message
+client.connect("broker_address")
+client.subscribe("forklift/task")
+client.loop_start()
