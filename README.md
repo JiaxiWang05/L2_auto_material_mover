@@ -15,6 +15,9 @@ Git allows you to download code from GitHub and collaborate on projects. Follow 
 Action: Download and flash Raspberry Pi OS or Ubuntu (if using Jetson) onto a microSD card and boot the device.
 Why: A lightweight Linux-based OS provides a stable environment with access to programming libraries, GPIO controls, and compatibility with ROS (Robot Operating System) for complex robotic tasks.
 
+Why: Libraries like RPi.GPIO are essential for interfacing with GPIO pins, which control the motors and read sensor data, while specific libraries for LIDAR, cameras, and motor control are required to handle each sensor and actuator properly. These libraries abstract the low-level commands, making coding more efficient and readable.
+
+
 ### Windows
 
 1. **Download Git**:  
