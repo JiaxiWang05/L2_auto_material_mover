@@ -25,3 +25,5 @@ def a_star_algorithm(start, end, grid):
             g[neighbor] = tentative_g
             f[neighbor] = g[neighbor] + heuristic(neighbor, end)
     return None
+
+Define the grid and test the forklift’s ability to follow the A* path
