@@ -1,5 +1,4 @@
-Here’s the text you provided with improved readability, using structured sections, fenced code blocks, and syntax highlighting where relevant.
-
+Hi My design group
 ---
 
 This design project focuses on developing an **automated material mover** capable of transporting up to **two tonnes** of load within a factory environment. The goal is to design a commercially viable goods-handling ecosystem that integrates with factory layouts and streamlines movement between supplier delivery, storage, and assembly areas. As industries push towards greater automation in the fourth industrial revolution, this project aims to replace conventional forklifts with a system that reduces reliance on personnel and optimizes workflow.
