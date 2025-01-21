@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Line Following Robots Simulation</title>
+    <style>
+        #simulation-container {
+            position: relative;
+            width: 800px;
+            height: 400px;
+            border: 2px solid black;
+            margin: 20px auto;
+        }
+
+        .robot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            transition: all 0.3s linear;
+        }
+
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .status {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button onclick="startSimulation()">Start</button>
+        <button onclick="stopSimulation()">Stop</button>
+    </div>
+    <div id="simulation-container"></div>
+    <div id="status" class="status"></div>
+
+    <script>
+        class Robot {
+            constructor(name, color, speed, startPos, startDirection) {
+                this.name = name;
+                this.color = color;
+                this.speed = speed;
+                this.x = startPos.x;
+                this.y = startPos.y;
+                this.direction = startDirection;
+                this.isRunning = false;
+                this.hasError = false;
+                this.element = this.createRobotElement();
+                this.updatePosition();
+            }
+
+            createRobotElement() {
+                const robot = document.createElement('div');
+                robot.className = 'robot';
+                robot.style.backgroundColor = this.color;
+                robot.title = this.name;
+                document.getElementById('simulation-container').appendChild(robot);
+                return robot;
+            }
+
+            updatePosition() {
+                this.element.style.left = `${this.x * 20}px`;
+                this.element.style.top = `${this.y * 20}px`;
+            }
+
+            move() {
+                if (!this.isRunning) return;
+
+                switch (this.direction) {
+                    case 'right':
+                        this.x++;
+                        if (this.x >= 39) this.direction = 'down';
+                        break;
+                    case 'down':
+                        this.y++;
+                        if (this.y >= 19) this.direction = 'left';
+                        break;
+                    case 'left':
+                        this.x--;
+                        if (this.x <= 0) this.direction = 'up';
+                        break;
+                    case 'up':
+                        this.y--;
+                        if (this.y <= 0) this.direction = 'right';
+                        break;
+                }
+
+                this.updatePosition();
+                this.updateStatus();
+            }
+
+            updateStatus() {
+                const statusDiv = document.getElementById('status');
+                statusDiv.innerHTML = `
+                    ${this.name}: Position(${this.x}, ${this.y}), Direction: ${this.direction}<br>
+                    ${statusDiv.innerHTML}
+                `;
+            }
+        }
+
+        const robots = [
+            new Robot('Red Robot', 'red', 300, {x: 0, y: 0}, 'right'),
+            new Robot('Blue Robot', 'blue', 500, {x: 0, y: 2}, 'right'),
+            new Robot('Green Robot', 'green', 700, {x: 0, y: 4}, 'right')
+        ];
+
+        let simulationInterval;
+
+        function startSimulation() {
+            robots.forEach(robot => {
+                robot.isRunning = true;
+                setInterval(() => {
+                    if (robot.isRunning && !robot.hasError) {
+                        robot.move();
+                    }
+                }, robot.speed);
+            });
+        }
+
+        function stopSimulation() {
+            robots.forEach(robot => {
+                robot.isRunning = false;
+            });
+            document.getElementById('status').innerHTML = 'Simulation stopped<br>';
+        }
+
+        // Error simulation (random errors)
+        function simulateRandomError() {
+            setInterval(() => {
+                if (Math.random() < 0.01) { // 1% chance of error
+                    const randomRobot = robots[Math.floor(Math.random() * robots.length)];
+                    randomRobot.hasError = true;
+                    randomRobot.element.style.border = '2px solid red';
+                    document.getElementById('status').innerHTML = 
+                        `Error occurred in ${randomRobot.name}! Emergency stop triggered.<br>` + 
+                        document.getElementById('status').innerHTML;
+                    stopSimulation();
+                }
+            }, 1000);
+        }
+
+        // Initialize simulation
+        simulateRandomError();
+    </script>
+</body>
+</html>
