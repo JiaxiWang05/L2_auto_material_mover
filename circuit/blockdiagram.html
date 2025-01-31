@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forklift Control System Architecture</title>
+    <style>
+        .diagram-container {
+            padding: 40px;
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .power-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-sections {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            flex: 1;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .component {
+            border: 1px solid #34495e;
+            border-radius: 4px;
+            padding: 8px;
+            margin: 8px 0;
+            background-color: white;
+        }
+
+        .sub-component {
+            font-size: 0.9em;
+            padding: 5px;
+            margin-left: 15px;
+            color: #576574;
+        }
+
+        .arrow {
+            position: relative;
+            height: 2px;
+            background-color: #34495e;
+            margin: 10px 0;
+        }
+
+        .arrow::after {
+            content: '►';
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            color: #34495e;
+        }
+
+        .communication-section {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #2c3e50;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+        }
+
+        .feedback-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <!-- Power Supply Section -->
+        <div class="power-section">
+            <div class="section-title">Power Supply</div>
+            <div class="component">7.2V LiPo Battery</div>
+            <div class="component">Voltage Regulators (5V/3.3V)</div>
+        </div>
+
+        <!-- Main Sections -->
+        <div class="main-sections">
+            <!-- Sense Section -->
+            <div class="section">
+                <div class="section-title">SENSE</div>
+                <div class="component">GPS/IMU
+                    <div class="sub-component">Position/Orientation</div>
+                </div>
+                <div class="component">3D LiDAR
+                    <div class="sub-component">Obstacle Detection</div>
+                </div>
+                <div class="component">Stereo Cameras
+                    <div class="sub-component">Visual Navigation</div>
+                </div>
+                <div class="component">Ultrasonic Sensors
+                    <div class="sub-component">Proximity Detection</div>
+                </div>
+                <div class="component">Weight/Strain Sensors
+                    <div class="sub-component">Load Monitoring</div>
+                </div>
+            </div>
+
+            <!-- Understand Section -->
+            <div class="section">
+                <div class="section-title">UNDERSTAND</div>
+                <div class="component">Raspberry Pi 4
+                    <div class="sub-component">- Sensor Fusion</div>
+                    <div class="sub-component">- Object Detection</div>
+                    <div class="sub-component">- Path Planning</div>
+                    <div class="sub-component">- PID Control</div>
+                </div>
+            </div>
+
+            <!-- Act Section -->
+            <div class="section">
+                <div class="section-title">ACT</div>
+                <div class="component">Motor Drivers
+                    <div class="sub-component">- PCA9685 PWM Controller</div>
+                    <div class="sub-component">- 3-Phase ESCs</div>
+                </div>
+                <div class="component">3-Phase Synchronous AC Motors
+                    <div class="sub-component">- Drive Motor</div>
+                    <div class="sub-component">- Lift Motor</div>
+                    <div class="sub-component">- Steering Motor</div>
+                </div>
+                <div class="component">Actuators
+                    <div class="sub-component">- Hydraulic Fork Actuator</div>
+                    <div class="sub-component">- Emergency Brake</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Communication Section -->
+        <div class="communication-section">
+            <div class="section-title">Communication Buses</div>
+            <div class="component">I2C - Sensors</div>
+            <div class="component">CAN - Motors</div>
+            <div class="component">UART - Debug</div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="feedback-section">
+            <div class="section">
+                <div class="section-title">Interface</div>
+                <div class="component">Display/UI</div>
+                <div class="component">Remote Monitoring</div>
+            </div>
+            <div class="section">
+                <div class="section-title">Feedback</div>
+                <div class="component">Motor Encoders</div>
+                <div class="component">Current Sensors</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
